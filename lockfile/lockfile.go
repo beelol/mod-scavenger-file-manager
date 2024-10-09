@@ -8,11 +8,11 @@ import (
 
 // ModEntry represents a single mod in the lockfile
 type ModEntry struct {
-	Name     string `yaml:"name"`
-	Version  string `yaml:"version"`
-	Type     string `yaml:"type"`   // "client", "server", or "agnostic"
-	Source   string `yaml:"source"` // "local" or "remote"`
-	FilePath string `yaml:"file_path"`
+	Name        string `yaml:"name"`
+	Version     string `yaml:"version"`
+	Environment string `yaml:"environment"` // "client", "server", or "agnostic"
+	Source      string `yaml:"source"`      // "local" or "remote"`
+	FilePath    string `yaml:"file_path"`
 }
 
 // LockFile represents the structure of the lockfile
@@ -31,6 +31,7 @@ func LoadLockFile(filePath string) (LockFile, error) {
 		}
 		return lock, err
 	}
+
 	defer file.Close()
 
 	decoder := yaml.NewDecoder(file)
