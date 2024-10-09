@@ -1,2 +1,27 @@
-s
-build/
+# macOS
+.DS_Store
+
+# Go related
+*.exe
+*.out
+*.log
+*.mod
+*.sum
+
+# Binaries
+/bin/
+/build/
+/dist/
+
+# Go vendor directory
+/vendor/
+
+# Ignore local config files
+*.env
+.env.*
+
+# IDE specific files (optional, remove if you want to keep them)
+.vscode/
+.idea/
+*.swp
+*.iml
