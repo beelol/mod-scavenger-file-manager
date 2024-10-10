@@ -6,7 +6,6 @@ import (
 
 	"mod-scavenger-file-manager/lockfile"
 	"mod-scavenger-file-manager/manual"
-	// Updated import
 )
 
 var verbose bool
