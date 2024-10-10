@@ -6,6 +6,7 @@ import (
 
 	"mod-scavenger-file-manager/lockfile"
 	"mod-scavenger-file-manager/manual"
+	"mod-scavenger-file-manager/ui"
 )
 
 var verbose bool
@@ -52,7 +53,8 @@ func main() {
 
 	virtualLock := lockfile.LockFile{}
 
-	// Update server mods
+	ui.PrintTableStart()
+
 	clientLock, err := manual.UpdateMods(clientModsDir, destinationModsDir, lockFilePath, "client", verbose)
 	if err != nil {
 		fmt.Printf("Error updating client mods: %v\n", err)
@@ -75,6 +77,8 @@ func main() {
 		return
 	}
 
+	ui.PrintTableEnd()
+
 	virtualLock = mergeLockFiles(virtualLock, agnosticLock)
 
 	err = lockfile.SaveLockFile(lockFilePath, virtualLock)
@@ -83,4 +87,5 @@ func main() {
 	} else {
 		fmt.Println("Lockfile saved successfully.")
 	}
+
 }

@@ -3,6 +3,7 @@ package virtualization
 import (
 	"fmt"
 	"mod-scavenger-file-manager/lockfile"
+	"mod-scavenger-file-manager/ui"
 	"os"
 	"path/filepath"
 )
@@ -34,14 +35,24 @@ func ProcessSymlinks(lock lockfile.LockFile, sourceModFiles []string, sourceDire
 				err := AddSymlink(sourceModPath, destModPath, verbose)
 				if err != nil {
 					fmt.Printf("Error recreating symlink for %s: %v\n", sourceModPath, err)
-				} else if verbose {
-					fmt.Printf("Recreated missing symlink for %s\n", sourceModPath)
+
+					// ui.PrintModTableEntry(mod.Name, environment, "Failed Recreation")
+				} else {
+					if verbose {
+						fmt.Printf("Recreated missing symlink for %s\n", sourceModPath)
+					}
+
+					ui.PrintModTableEntry(mod.Name, environment, "Recreated")
 				}
 			}
+
+			ui.PrintModTableEntry(mod.Name, environment, "Retained")
 
 		} else {
 			// If the mod doesn't exist in the source directory, remove its symlink and exclude it from the lockfile
 			removeSymlink(destModPath, verbose)
+
+			ui.PrintModTableEntry(mod.Name, environment, "Removed")
 		}
 	}
 

@@ -24,9 +24,9 @@ func UpdateMods(modsDir, destDir, lockFilePath string, environment string, verbo
 	modFiles, _ := filepath.Glob(filepath.Join(modsDir, "*.jar"))
 
 	// Display UI headers and progress
-	ui.DisplayHeader(fmt.Sprintf("Updating Mods for Environment: %s", environment))
+	// ui.DisplayHeader(fmt.Sprintf("Updating Mods for Environment: %s", environment))
 
-	ui.StartProgress(modFiles)
+	// ui.StartProgress(modFiles)
 
 	// Process symlinks, ensuring that mods in the lockfile are still valid
 	unlinkedModFiles := virtualization.ProcessSymlinks(lock, modFiles, modsDir, destDir, &newLock, verbose, environment)
@@ -34,9 +34,9 @@ func UpdateMods(modsDir, destDir, lockFilePath string, environment string, verbo
 	// Add new mods that are not already symlinked (unlinked mods)
 	addNewModsToLockfile(unlinkedModFiles, &newLock, environment, modsDir, destDir, verbose)
 
-	fmt.Printf("Mods in newLock before saving: %+v\n", newLock.Mods)
+	// fmt.Printf("Mods in newLock before saving: %+v\n", newLock.Mods)
 
-	ui.EndUI()
+	// ui.EndUI()
 	return newLock, nil
 }
 
@@ -45,7 +45,7 @@ func addNewModsToLockfile(modFiles []string, newLock *lockfile.LockFile, environ
 	for _, modFile := range modFiles {
 		modName := filepath.Base(modFile) // Get the mod name
 
-		ui.UpdateProgress(modName)
+		// ui.UpdateProgress(modName)
 
 		// Create a new ModEntry for each unlinked mod and add it to the new lockfile
 		newMod := lockfile.ModEntry{
@@ -64,6 +64,8 @@ func addNewModsToLockfile(modFiles []string, newLock *lockfile.LockFile, environ
 			fmt.Printf("Error creating symlink for %s: %v, not added to lockfile.\n", modName, err)
 		} else {
 			newLock.Mods = append(newLock.Mods, newMod)
+
+			ui.PrintModTableEntry(modName, environment, "Added")
 		}
 	}
 }
