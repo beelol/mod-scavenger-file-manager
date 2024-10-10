@@ -25,6 +25,7 @@ func UpdateMods(modsDir, destDir, lockFilePath string, environment string, verbo
 
 	// Display UI headers and progress
 	ui.DisplayHeader(fmt.Sprintf("Updating Mods for Environment: %s", environment))
+
 	ui.StartProgress(modFiles)
 
 	// Process symlinks, ensuring that mods in the lockfile are still valid
